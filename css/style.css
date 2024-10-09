@@ -1,0 +1,47 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: minmax(300px, auto);
+  grid-gap: 0;
+	background-color: rgba(70, 162, 168, 1.0);
+	margin-top: 10px;
+}
+
+.stove {
+	display: block;
+	background-color: rgba(36, 46, 48, 1.0);
+	height: 300px;
+	margin: 2%;
+}
+
+.stove:hover {
+	background-color: rgba(56, 66, 68, 1.0);
+}
+
+.devinfo {
+	display: flex;
+	justify-content: center;
+}
+
+.devimginfo {
+	align-items: center;
+	height: 70%;
+}
+
+.devtxtinfo {
+	align-items: center;
+	height: 15%;
+}
+
+.devoffline {
+	color: red;
+}
+
+@media screen and (max-width: 600px) {
+	.menu-item {
+		font-size: 1.2em;
+	}
+	.devtxtinfo {
+		font-size: 1.2em;
+	}
+}
