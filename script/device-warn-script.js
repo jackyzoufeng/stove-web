@@ -31,7 +31,7 @@ dataspans[3].addEventListener("click", () => {
 
 function getDeviceData() {
 	const fetchPromise = fetch(
-	  "./data/device-info.json",
+	  "./data/device-warn.json",
 	);
 	
 	fetchPromise
@@ -48,43 +48,47 @@ function getDeviceData() {
 	  //  console.error(`can not get data lists：${error}`);
 	  //});
 
-  window.setTimeout(()=>{getDeviceData();}, 5000);
+  //window.setTimeout(()=>{getDeviceData();}, 5000);
 }
 
 function updateInfo(objs) {
-	const infoTable = document.querySelector(".info-table");
-	while (infoTable.firstChild) {
-	  infoTable.removeChild(infoTable.firstChild);
+	const warnTable = document.querySelector(".warn-table");
+	while (warnTable.firstChild) {
+	  warnTable.removeChild(warnTable.firstChild);
 	}
 	
-	const switchTable = document.querySelector(".switch-table");
-	while (switchTable.firstChild) {
-	  switchTable.removeChild(switchTable.firstChild);
-	}
-	
-  const datalist = objs.datalist;
-  for (const data of datalist) {
+	const warnlist = objs.warnlist;
+	for (const warn of warnlist) {
 		const tr = document.createElement("tr");
 		const tdn = document.createElement("td");
-		tdn.textContent = data.name;
+		tdn.textContent = warn.name;
 		tr.appendChild(tdn);
 		
-		if (typeof(data.value) === "boolean") {
-			const tdv = document.createElement("td");
-			if (data.value) {
-				tdv.innerHTML = `<span class="status-on"></span>`;
-			} else {
-				tdv.innerHTML = `<span class="status-off"></span>`;
-			}
-			tr.appendChild(tdv);
-			switchTable.appendChild(tr);
-		} else {
-			const tdv = document.createElement("td");
-			tdv.innerHTML = `${data.value} <span class="unit-color">${data.unit}</span>`;
-			tr.appendChild(tdv);
-			infoTable.appendChild(tr);
-		}
-  }
+		const tdv = document.createElement("td");
+		const spanv = document.createElement("span");
+		spanv.setAttribute("class", "status-on");
+		tdv.appendChild(spanv);
+		tr.appendChild(tdv);
+		
+		const tdc = document.createElement("td");
+		const btnc = document.createElement("button");
+		btnc.textContent = "关闭";
+		btnc.setAttribute("class", "warn-item");
+		btnc.addEventListener("click", () => {
+			spanv.setAttribute("class", "status-off");
+		});
+		const btnd = document.createElement("button");
+		btnd.textContent = "删除";
+		btnd.setAttribute("class", "warn-item");
+		btnd.addEventListener("click", () => {
+			warnTable.removeChild(tr);
+		});
+		tdc.appendChild(btnc);
+		tdc.appendChild(btnd);
+		tr.appendChild(tdc);
+		
+		warnTable.appendChild(tr);
+	}
 }
 
 getDeviceData();
