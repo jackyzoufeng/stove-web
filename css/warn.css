@@ -1,5 +1,11 @@
 .container {
-	margin: 20px 10px 10px 10px;
+	display: grid;
+	grid-template-columns: 1fr;
+	background-color: rgba(80, 102, 128, 0.8);
+}
+
+.warn-container {
+	margin: 10px;
 }
 
 .status-on {

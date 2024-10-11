@@ -8,20 +8,24 @@
 		<link rel="stylesheet" href="./css/warn.css" />
 	</head>
 	<body>
-		<div class="menu menu-pos">
-			<button class="menu-item">设备详情</button>
-			<button class="menu-item">实时曲线</button>
-			<button class="menu-item active-item">报警信息</button>
-			<button class="menu-item">返回</button>
-		</div>
-		<div class="container">
-			<table class="warn-table">
-				<tr>
-					<td>风机冷却水流量故障</td>
-					<td><span>报警</span></td>
-					<td><button>关闭</button><button>删除</button></td>
-				</tr>
-			</table>
+		<div class="main-container">
+			<div class="menu menu-pos">
+				<input type="image" src="./img/Home.png" class="image-item" />
+				<button class="menu-item">设备详情</button>
+				<button class="menu-item">实时曲线</button>
+				<button class="menu-item active-item">报警信息</button>
+			</div>
+			<div class="container">
+				<div class="warn-container">
+					<table class="warn-table">
+						<tr>
+							<td>风机冷却水流量故障</td>
+							<td><span>报警</span></td>
+							<td><button>关闭</button><button>删除</button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 		<script src="./script/device-warn-script.js"></script>
 	</body>

@@ -10,34 +10,29 @@ body {
 
 .main-container {
 	display: grid;
-	grid-template-rows: 50px auto;
+	grid-template-columns: 150px auto;
 }
 
 .menu {
+	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	background-color: rgba(52, 46, 76, 0.6);
 }
 
 .menu-pos {
   position: sticky;
-  top: 0px;
-}
-
-.image-item {
-	width: 50px;
-	height: 50px;
-	margin-left: 10px;
-	margin-right: 10px;
+  top: 0;
 }
 
 .menu-item {
-	width: 20vw;
+	width: 150px;
 	height: 50px;
 	background-color: rgba(56, 36, 46, 1);
 	font-size: 1.5em;
 	color: white;
 	border: none;
-	border-bottom: 3px solid rgba(80, 69, 55, 0.5);
+	border-right: 3px solid rgba(80, 69, 55, 0.5);
 }
 
 .menu-item:hover {
@@ -50,11 +45,23 @@ button[class~="menu-item"]:hover {
 
 .active-item {
 	background-color: rgba(72,66,16,1);
-	border-bottom: 3px solid rgba(160, 138, 110, 1);
+	border-right: 3px solid rgba(160, 138, 110, 1);
 }
 
 @media screen and (max-width: 600px) {
+	.main-container {
+		grid-template-columns: 1fr;
+	}
+	.menu {
+		height: auto;
+		flex-direction: row;
+	}
 	.menu-item {
-		font-size: 1em;
+		border: none;
+		border-bottom: 3px solid rgba(80, 69, 55, 0.5);
+		font-size: 1.2em;
+	}
+	.active-item {
+		border-bottom: 3px solid rgba(160, 138, 110, 1);
 	}
 }

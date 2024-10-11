@@ -25,7 +25,9 @@ dataspans[1].addEventListener("click", () => {
 dataspans[2].addEventListener("click", () => {
 	window.location.href = `./device-warn.html?dev_id=${urlParams['dev_id']}`;
 });
-dataspans[3].addEventListener("click", () => {
+
+const homeimage = document.querySelector(".image-item");
+homeimage.addEventListener("click", () => {
 	window.location.href = "./index.html";
 });
 

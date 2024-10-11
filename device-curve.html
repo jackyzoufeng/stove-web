@@ -8,14 +8,16 @@
 		<link rel="stylesheet" href="./css/curve.css" />
 	</head>
 	<body>
-		<div class="menu menu-pos">
-			<button class="menu-item">设备详情</button>
-			<button class="menu-item active-item">实时曲线</button>
-			<button class="menu-item">报警信息</button>
-			<button class="menu-item">返回</button>
-		</div>
-		<div class="container">
-			<div id="main-curve"></div>
+		<div class="main-container">
+			<div class="menu menu-pos">
+				<input type="image" src="./img/Home.png" class="image-item" />
+				<button class="menu-item">设备详情</button>
+				<button class="menu-item active-item">实时曲线</button>
+				<button class="menu-item">报警信息</button>
+			</div>
+			<div class="container">
+				<div id="main-curve"></div>
+			</div>
 		</div>
 		<script src="./script/echarts.js"></script>
 		<script src="./script/device-curve-script.js"></script>
