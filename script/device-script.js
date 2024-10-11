@@ -1,12 +1,13 @@
 let urlParams;
+let queryString;
 
 function getUrlParams() {
-	const queryString = document.URL.split('?')[1];
+	queryString = document.URL.split('?')[1];
 	if (!queryString) {
 		return {};
 	}
 	const queryParam = {};
-	queryString.split('?').forEach(param => {
+	queryString.split('&').forEach(param => {
 		const[key, value] = param.split('=');
 		queryParam[key] = value;
 	});
@@ -17,14 +18,11 @@ urlParams = getUrlParams();
 
 const dataspans = document.querySelectorAll(".menu-item");
 dataspans[0].addEventListener("click", () => {
-	window.location.href = `./device-info.html?dev_id=${urlParams['dev_id']}`;
+	window.location.href = `./device-info.html?${queryString}`;
 });
 dataspans[1].addEventListener("click", () => {
-	window.location.href = `./device-curve.html?dev_id=${urlParams['dev_id']}`;
+	window.location.href = `./device-curve.html?${queryString}`;
 });
 dataspans[2].addEventListener("click", () => {
-	window.location.href = `./device-warn.html?dev_id=${urlParams['dev_id']}`;
-});
-dataspans[3].addEventListener("click", () => {
-	window.location.href = "./index.html";
+	window.location.href = `./device-warn.html?${queryString}`;
 });

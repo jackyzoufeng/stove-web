@@ -24,7 +24,7 @@ function addDevice(objs) {
     divStove.setAttribute("class", "stove");
 		divStove.setAttribute("id", `${devidPrefix}${device.dev_id}`);
 		divStove.addEventListener("click", ()=>{
-			window.location.href=`./device-info.html?dev_id=${device.dev_id}`;
+			window.location.href=`./device-info.html?dev_id=${device.dev_id}&name=${device.name}`;
 		});
     
     const divImg = document.createElement("div");
