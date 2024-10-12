@@ -24,7 +24,7 @@ function addDevice(objs) {
     divStove.setAttribute("class", "stove");
 		divStove.setAttribute("id", `${devidPrefix}${device.dev_id}`);
 		divStove.addEventListener("click", ()=>{
-			window.location.href=`./device-info.html?dev_id=${device.dev_id}&name=${device.name}`;
+			window.location.href=`./device-info.html?dev_id=${device.dev_id}&name=${encodeURI(device.name)}`;
 		});
     
     const divImg = document.createElement("div");
@@ -74,7 +74,7 @@ function addDevice(objs) {
 
 function getDeviceInfo() {
 	const fetchPromise = fetch(
-	  "./data/devices-data.json",
+	  "./data/device-data.json",
 	);
 	
 	fetchPromise
