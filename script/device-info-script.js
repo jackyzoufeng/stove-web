@@ -15,6 +15,9 @@ function getUrlParams() {
 }
 
 urlParams = getUrlParams();
+if ((urlParams["dev_id"] === null)||(urlParams["dev_id"] === undefined)) {
+	window.location.href = "./index.html";
+}
 
 const dataspans = document.querySelectorAll(".menu-item");
 dataspans[0].addEventListener("click", () => {

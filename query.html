@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title></title>
 		<link rel="stylesheet" href="./css/main-menu.css" />
+		<link rel="stylesheet" href="./css/query.css" />
 	</head>
 	<body>
 		<div class="main-container">
@@ -13,6 +14,53 @@
 				<button class="menu-item active-item">数据查询</button>
 			</div>
 			<div class="container">
+				<form>
+					<h1>查询选项</h1>
+					<fieldset>
+					  <legend>选择设备</legend>
+					  <ul class="dev-container">
+					    <li>
+								<input type="radio" id="stove_dev_1" name="selected_dev" value="2090"/>
+					      <label for="stove_dev_1">1号加热炉</label>
+					    </li>
+							<li>
+								<input type="radio" id="stove_dev_2" name="selected_dev" value="2100"/>
+							  <label for="stove_dev_2">2号加热炉</label>
+							</li>
+					  </ul>
+					</fieldset>
+					<fieldset>
+						<legend>选择起止时间</legend>
+						<ul class="date-container">
+							<li>
+								<label for="begin_date_1">开始时间</label>
+								<input type="datetime-local" id="begin_date_1" name="begin_date_1"/>
+							</li>
+							<li>
+								<label for="end_date_1">结束时间</label>
+								<input type="datetime-local" id="end_date_1" name="end_date_1"/>
+							</li>
+						</ul>
+					</fieldset>
+					<fieldset>
+						<legend>选择查询类型</legend>
+						<ul class="type-container">
+							<li>
+								<input type="radio" id="dev_data_1" name="selected_type" value="report_data" checked="true"/>
+							  <label for="dev_data_1">报表数据</label>
+							</li>
+							<li>
+								<input type="radio" id="dev_data_2" name="selected_type" value="warn_data"/>
+							  <label for="dev_data_2">报警数据</label>
+							</li>
+						</ul>
+					</fieldset>
+					<section>
+					  <p>
+					    <button type="submit">查询</button>
+					  </p>
+					</section>
+				</form>
 			</div>
 		</div>
 		<script src="./script/query-script.js"></script>
