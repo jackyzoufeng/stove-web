@@ -1,4 +1,4 @@
-function formatDateTime(date) {
+function formatDate(date) {
   function padZero(num) {
     return num < 10 ? '0' + num : num;
   }
@@ -6,10 +6,19 @@ function formatDateTime(date) {
   var year = date.getFullYear();
   var month = padZero(date.getMonth() + 1); // 月份是从0开始的
   var day = padZero(date.getDate());
+ 
+  return year + '-' + month + '-' + day;
+}
+
+function formatTime(date) {
+  function padZero(num) {
+    return num < 10 ? '0' + num : num;
+  }
+ 
   var hours = padZero(date.getHours());
   var minutes = padZero(date.getMinutes());
  
-  return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+  return hours + ':' + minutes;
 }
 
 function initDevice() {
@@ -47,6 +56,7 @@ function updateform(objs) {
 		input.setAttribute("id", `stove_dev_${index}`);
 		input.setAttribute("name", `selected_dev`);
 		input.setAttribute("value", `${device.dev_id}`);
+		input.setAttribute("devname", `${device.name}`);
 		if (index === 1) {
 			input.setAttribute("checked", true);
 		}
@@ -67,16 +77,19 @@ function updateform(objs) {
 function updateDateAndType() {
 	var datetime = new Date();
 	const begindate = document.querySelector("#begin_date_1");
+	const begintime = document.querySelector("#begin_time_1");
 	const enddate = document.querySelector("#end_date_1");
-	enddate.value = formatDateTime(datetime);
+	const endtime = document.querySelector("#end_time_1");
+	enddate.value = formatDate(datetime);
+	endtime.value = formatTime(datetime);
 	var datetimebegin = new Date(datetime - 30*24*60*60*1000);
-	begindate.value = formatDateTime(datetimebegin);
+	begindate.value = formatDate(datetimebegin);
+	begintime.value = formatTime(datetimebegin);
 	
 	var form = document.querySelector("form");
 	form.addEventListener("submit", (event) => {
 		event.preventDefault();
-		console.log(getCheckedRadioInput("selected_dev"));
-		console.log(getCheckedRadioInput("selected_type"));
+		getCurveData(getCheckedRadioInput("selected_dev"), getCheckedRadioInputDevName(), getCheckedRadioInput("selected_type"), begindate.value, begintime.value, enddate.value, endtime.value);
 	});
 }
 
@@ -86,6 +99,49 @@ function getCheckedRadioInput(radioname) {
 		if (radiogroup[i].checked) {
 			return radiogroup[i].value;
 		}
+	}
+}
+
+function getCheckedRadioInputDevName() {
+	const radiogroup = document.querySelectorAll(`input[name=selected_dev]`);
+	for (var i = 0; i < radiogroup.length; i++) {
+		if (radiogroup[i].checked) {
+			return radiogroup[i].getAttribute("devname");
+		}
+	}
+}
+
+function getCurveData(dev, devname, type, begindate, begintime, enddate, endtime) {
+	console.log(dev);
+	console.log(devname);
+	console.log(type);
+	console.log(begindate);
+	console.log(begintime);
+	console.log(enddate);
+	console.log(endtime);
+	
+	if (type === "report_data") {
+		const fetchPromise = fetch(
+		  "./data/device-curve.json",
+		);
+		
+		fetchPromise
+		  .then((response) => {
+		    if (!response.ok) {
+		      throw new Error(`error occur when get http request ：${response.status}`);
+		    }
+		    return response.json();
+		  })
+		  .then((json) => {
+				localStorage.setItem("devname", devname);
+				localStorage.setItem("query-data", JSON.stringify(json));
+				window.location.href = `./query-table.html`;
+		  })
+		  //.catch((error) => {
+		  //  console.error(`can not get data lists：${error}`);
+		  //});
+	} else if (type === "warn_data") {
+		window.location.href = `./query-warn.html`;
 	}
 }
 
