@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title></title>
 		<link rel="stylesheet" href="./css/main.css" />
-		<link rel="stylesheet" href="./css/curve.css" />
+		<link rel="stylesheet" href="./css/table.css" />
 	</head>
 	<body>
 		<div class="main-container">
@@ -14,7 +14,23 @@
 				<button class="menu-item active-item">报警</button>
 			</div>
 			<div class="container">
-				<div id="main-curve"></div>
+				<table id="main-table">
+					<caption>1号加热炉</caption>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>时间</th>
+							<th>内容</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>2024-7-6</td>
+							<td>炉压低报警</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<script src="./script/echarts.js"></script>

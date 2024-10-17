@@ -11,7 +11,7 @@ homeimage.addEventListener("click", () => {
 	window.location.href = "./index.html";
 });
 
-var myChart = echarts.init(document.querySelector("#main-curve"));
+var myChart = echarts.init(document.querySelector("#main-curve"), "dark");
 
 if (localStorage.getItem("query-data")) {
 	var json = JSON.parse(localStorage.getItem("query-data"));

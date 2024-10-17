@@ -60,7 +60,7 @@ function getCurveData() {
 getCurveData();
 
 // 基于准备好的dom，初始化echarts实例
-var myChart = echarts.init(document.querySelector("#main-curve"));
+var myChart = echarts.init(document.querySelector("#main-curve"), "dark");
 
 function showCurve(devdata) {
 	// 指定图表的配置项和数据

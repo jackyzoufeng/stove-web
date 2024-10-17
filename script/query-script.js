@@ -141,7 +141,25 @@ function getCurveData(dev, devname, type, begindate, begintime, enddate, endtime
 		  //  console.error(`can not get data lists：${error}`);
 		  //});
 	} else if (type === "warn_data") {
-		window.location.href = `./query-warn.html`;
+		const fetchPromise = fetch(
+		  "./data/device-warn-list.json",
+		);
+		
+		fetchPromise
+		  .then((response) => {
+		    if (!response.ok) {
+		      throw new Error(`error occur when get http request ：${response.status}`);
+		    }
+		    return response.json();
+		  })
+		  .then((json) => {
+				localStorage.setItem("devname", devname);
+				localStorage.setItem("query-warn", JSON.stringify(json));
+				window.location.href = `./query-warn.html`;
+		  })
+		  //.catch((error) => {
+		  //  console.error(`can not get data lists：${error}`);
+		  //});
 	}
 }
 
