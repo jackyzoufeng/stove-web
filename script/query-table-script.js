@@ -31,17 +31,24 @@ if (localStorage.getItem("query-data")) {
 	buildTable(devname, json);
 }
 
+var currentpage;
+var totalpage;
+var rowcountperpage;
+var totalcount;
+
 function buildTable(devname, json) {
-	const maintable = document.querySelector("#main-table");
-	while (maintable.firstChild) {
-	  maintable.removeChild(maintable.firstChild);
-	}
+	rowcountperpage = 26;
+	totalcount = json.xaxis.length;
+	totalpage = Math.ceil(totalcount/rowcountperpage);
+	currentpage = 0;
 	
-	const caption = document.createElement("caption");
+	const caption = document.querySelector("#main-table>caption");
 	caption.textContent = devname;
-	maintable.appendChild(caption);
 	
-	const thead = document.createElement("thead");
+	const thead = document.querySelector("#main-table>thead");
+	while (thead.firstChild) {
+	  thead.removeChild(thead.firstChild);
+	}
 	const htr = document.createElement("tr");
 	const th1 = document.createElement("th");
 	th1.textContent = "序号";
@@ -56,25 +63,62 @@ function buildTable(devname, json) {
 		htr.appendChild(th2);
 	}
 	thead.appendChild(htr);
-	maintable.appendChild(thead);
 	
-	const tbody = document.createElement("tbody");
-	const length = json.xaxis.length;
+	const prevbtn = document.querySelector("#prev-page");
+	prevbtn.disabled = true;
+	const nextbtn = document.querySelector("#next-page");
+	prevbtn.addEventListener("click", () => {
+		if (currentpage === 0) {
+			return;
+		}
+		currentpage--;
+		buildTableBody();
+		if (currentpage === 0) {
+			prevbtn.disabled = true;
+		}
+		nextbtn.disabled = false;
+	});
+	nextbtn.addEventListener("click", () => {
+		if (currentpage === totalpage-1) {
+			return;
+		}
+		currentpage++;
+		buildTableBody();
+		if (currentpage === totalpage-1) {
+			nextbtn.disabled = true;
+		}
+		prevbtn.disabled = false;
+	});
+	const totalspan = document.querySelector("#total-page");
+	totalspan.textContent = `共${totalpage}页`;
+	buildTableBody();
+	
+	const tfoottr = document.querySelector("#main-table>tfoot td");
+	tfoottr.setAttribute("colspan", `${seriescount+2}`)
+}
+
+function buildTableBody() {
+	const currentspan = document.querySelector("#current-page");
+	currentspan.textContent = `第${currentpage+1}页`;
+	const tbody = document.querySelector("#main-table>tbody");
+	while (tbody.firstChild) {
+	  tbody.removeChild(tbody.firstChild);
+	}
+	const length = (currentpage<totalpage-1)?rowcountperpage:(totalcount%rowcountperpage);
 	for (var i = 0; i < length; i++) {
 		const btr = document.createElement("tr");
 		const td1 = document.createElement("td");
 		td1.textContent = `${i+1}`;
 		btr.appendChild(td1);
 		const td2 = document.createElement("td");
-		td2.textContent = json.xaxis[i];
+		td2.textContent = json.xaxis[currentpage*rowcountperpage+i];
 		btr.appendChild(td2);
 		var seriescount = json.series.count;
 		for (var j = 0; j < seriescount; j++) {
 			const td = document.createElement("td");
-			td.textContent = Number.parseFloat(json.series.datalist[j].data[i]).toFixed(2);
+			td.textContent = Number.parseFloat(json.series.datalist[j].data[currentpage*rowcountperpage+i]).toFixed(2);
 			btr.appendChild(td);
 		}
 		tbody.appendChild(btr);
 	}
-	maintable.appendChild(tbody);
 }
