@@ -14,44 +14,70 @@ if (localStorage.getItem("query-warn")) {
 	buildTable(devname, json);
 }
 
+var currentpage;
+var totalpage;
+var rowcountperpage;
+var totalcount;
+
 function buildTable(devname, json) {
-	const maintable = document.querySelector("#main-table");
-	while (maintable.firstChild) {
-	  maintable.removeChild(maintable.firstChild);
-	}
+	rowcountperpage = 26;
+	totalcount = json.warnlist.length;
+	totalpage = Math.ceil(totalcount/rowcountperpage);
+	currentpage = 0;
 	
-	const caption = document.createElement("caption");
+	const caption = document.querySelector("#main-table>caption");
 	caption.textContent = devname;
-	maintable.appendChild(caption);
 	
-	const thead = document.createElement("thead");
-	const htr = document.createElement("tr");
-	const th1 = document.createElement("th");
-	th1.textContent = "序号";
-	htr.appendChild(th1);
-	const th2 = document.createElement("th");
-	th2.textContent = "时间";
-	htr.appendChild(th2);
-	const th3 = document.createElement("th");
-	th3.textContent = "内容";
-	htr.appendChild(th3);
-	thead.appendChild(htr);
-	maintable.appendChild(thead);
+	const prevbtn = document.querySelector("#prev-page");
+	prevbtn.disabled = true;
+	const nextbtn = document.querySelector("#next-page");
+	prevbtn.addEventListener("click", () => {
+		if (currentpage === 0) {
+			return;
+		}
+		currentpage--;
+		buildTableBody();
+		if (currentpage === 0) {
+			prevbtn.disabled = true;
+		}
+		nextbtn.disabled = false;
+	});
+	nextbtn.addEventListener("click", () => {
+		if (currentpage === totalpage-1) {
+			return;
+		}
+		currentpage++;
+		buildTableBody();
+		if (currentpage === totalpage-1) {
+			nextbtn.disabled = true;
+		}
+		prevbtn.disabled = false;
+	});
+	const totalspan = document.querySelector("#total-page");
+	totalspan.textContent = `共${totalpage}页`;
 	
-	const tbody = document.createElement("tbody");
-	const length = json.warnlist.length;
+	buildTableBody();
+}
+
+function buildTableBody() {
+	const currentspan = document.querySelector("#current-page");
+	currentspan.textContent = `第${currentpage+1}页`;
+	const tbody = document.querySelector("#main-table>tbody");
+	while (tbody.firstChild) {
+	  tbody.removeChild(tbody.firstChild);
+	}
+	const length = (currentpage<totalpage-1)?rowcountperpage:(totalcount%rowcountperpage);
 	for (var i = 0; i < length; i++) {
 		const btr = document.createElement("tr");
 		const td1 = document.createElement("td");
 		td1.textContent = `${i+1}`;
 		btr.appendChild(td1);
 		const td2 = document.createElement("td");
-		td2.textContent = json.warnlist[i].time;
+		td2.textContent = json.warnlist[currentpage*rowcountperpage+i].time;
 		btr.appendChild(td2);
 		const td3 = document.createElement("td");
-		td3.textContent = json.warnlist[i].name;
+		td3.textContent = json.warnlist[currentpage*rowcountperpage+i].name;
 		btr.appendChild(td3);
 		tbody.appendChild(btr);
 	}
-	maintable.appendChild(tbody);
 }

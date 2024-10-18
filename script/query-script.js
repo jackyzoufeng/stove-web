@@ -111,6 +111,13 @@ function getCheckedRadioInputDevName() {
 	}
 }
 
+function isEmptyString(value) {
+	if ((typeof(value) === "undefined")||(value === null)||(value.length === 0)) {
+		return true;
+	}
+	return false;
+}
+
 function getCurveData(dev, devname, type, begindate, begintime, enddate, endtime) {
 	console.log(dev);
 	console.log(devname);
@@ -119,6 +126,18 @@ function getCurveData(dev, devname, type, begindate, begintime, enddate, endtime
 	console.log(begintime);
 	console.log(enddate);
 	console.log(endtime);
+	
+	if (isEmptyString(begindate)||isEmptyString(begintime)||isEmptyString(enddate)||isEmptyString(endtime)) {
+		window.alert("未选择时间");
+		return;
+	}
+	const begindatetime = new Date(`${begindate}T${begintime}`);
+	const enddatetime = new Date(`${enddate}T${endtime}`);
+	
+	if (begindatetime >= enddatetime) {
+		window.alert("开始时间要小于结束时间");
+		return;
+	}
 	
 	if (type === "report_data") {
 		const fetchPromise = fetch(
