@@ -31,3 +31,8 @@ tr:nth-child(odd) {
 tr:hover {
 	background-color: rgba(100, 80, 62, 0.9);
 }
+
+#export-to-excel {
+	position: relative;
+	right: 30px;
+}

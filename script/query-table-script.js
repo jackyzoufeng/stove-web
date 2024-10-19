@@ -64,6 +64,10 @@ function buildTable(devname, json) {
 	}
 	thead.appendChild(htr);
 	
+	const exportxlsx = document.querySelector("#export-to-excel");
+	exportxlsx.addEventListener("click", () => {
+		exporttoexcel(devname, json);
+	});
 	const prevbtn = document.querySelector("#prev-page");
 	prevbtn.disabled = true;
 	const nextbtn = document.querySelector("#next-page");
@@ -121,4 +125,24 @@ function buildTableBody() {
 		}
 		tbody.appendChild(btr);
 	}
+}
+
+function exporttoexcel(devname, json) {
+	var datalist = [];
+	var length = json.xaxis.length;
+	for (var i = 0; i < length; i++) {
+		var data = {};
+		data["time"] = json.xaxis[i];
+		var col = json.series.count;
+		for (var j = 0; j < col; j++) {
+			data[`${json.series.datalist[j].name}`] = json.series.datalist[j].data[i];
+		}
+		datalist.push(data);
+	}
+	const new_sheet = XLSX.utils.json_to_sheet(datalist);
+	const new_book = XLSX.utils.book_new()
+	// 将 sheet 添加到 book 中
+	XLSX.utils.book_append_sheet(new_book, new_sheet, devname);
+	// 导出excel文件
+	XLSX.writeFile(new_book, '报表数据.xlsx')
 }

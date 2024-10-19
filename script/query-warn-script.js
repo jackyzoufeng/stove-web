@@ -28,6 +28,10 @@ function buildTable(devname, json) {
 	const caption = document.querySelector("#main-table>caption");
 	caption.textContent = devname;
 	
+	const exportxlsx = document.querySelector("#export-to-excel");
+	exportxlsx.addEventListener("click", () => {
+		exporttoexcel(devname, json);
+	});
 	const prevbtn = document.querySelector("#prev-page");
 	prevbtn.disabled = true;
 	const nextbtn = document.querySelector("#next-page");
@@ -80,4 +84,13 @@ function buildTableBody() {
 		btr.appendChild(td3);
 		tbody.appendChild(btr);
 	}
+}
+
+function exporttoexcel(devname, json) {
+	const new_sheet = XLSX.utils.json_to_sheet(json.warnlist);
+	const new_book = XLSX.utils.book_new()
+	// 将 sheet 添加到 book 中
+	XLSX.utils.book_append_sheet(new_book, new_sheet, devname);
+	// 导出excel文件
+	XLSX.writeFile(new_book, '报警数据.xlsx')
 }
