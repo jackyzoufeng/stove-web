@@ -7,3 +7,5 @@ https://developer.mozilla.org/zh-CN/docs/Learn
 https://github.com/mdn/learning-area/tree/main
 6.How do I get started with Node.js
 https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js/5511507#5511507
+7.good CDN
+https://www.jsdelivr.com
