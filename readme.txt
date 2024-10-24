@@ -9,3 +9,4 @@ https://github.com/mdn/learning-area/tree/main
 https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js/5511507#5511507
 7.good CDN
 https://www.jsdelivr.com
+8.test msg
